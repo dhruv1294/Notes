@@ -41,9 +41,18 @@ public class MainActivity extends AppCompatActivity {
            Intent intent = new Intent(getApplicationContext(), NoteEditerActivity.class);
            startActivity(intent);
            return true;
+       } else if (item.getItemId() == R.id.deletesnotes) {
+           SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("com.example.notes", Context.MODE_PRIVATE);
+           HashSet<String> set = new HashSet<>(MainActivity.notes);
+           set.clear();
+           sharedPreferences.edit().putStringSet("notes", set).apply();
+           notes.clear();
+           arrayAdapter.notifyDataSetChanged();
+           return true;
        }
-       else return false;
-
+       else {
+           return false;
+       }
     }
 
     @Override
